@@ -1,10 +1,13 @@
 package com.johnsunday.aop.aspects;
 
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+
+import com.johnsunday.aop.main.Customer;
 
 
 @Aspect
@@ -19,9 +22,23 @@ public class LoginAspect {
 	public void forCustomers() {}
 	
 	@Before("forCustomers()")
-	public void beforeInsertingCustomer() {
+									// Punto de observación/interjección
+	public void beforeInsertingCustomer(JoinPoint myJoin) {
+		// Vídeo 83 - Hay que acceder a los parámetros del método 
+		// insertCustomer(Customer c,String type), 
+		// para hacer comprobaciones
 		System.out.println("The user is LOGGED IN");
 		System.out.println("The profile to insert customers is CORRECT");
+		// Capturamos los argumentos de método que se ejecuta a continuación.
+		// (Customer c y String type)
+		Object[]args = myJoin.getArgs();
+		for(Object o:args) {
+			if(o instanceof Customer) {
+				Customer c = (Customer) o;
+				System.out.println("Name customer: " + c.getName());
+				System.out.println("Name customer: " + c.getType());
+			}
+		}
 	}
 	
 	// Como la anotación para el orden de aspectos->@Order() sólo se puede

@@ -14,7 +14,7 @@ public class Principal {
 		DaoCustomer customer = context.getBean("daoCustomer",DaoCustomer.class);
 		DaoVipCustomer vipCustomer = context.getBean("daoVipCustomer",DaoVipCustomer.class);
 		// Llamar al método.
-		customer.insertCustomer(new Customer("juanon","normal"),"NORMAL");
+		customer.insertCustomer(new Customer("juan","normal"),"NORMAL");
 		vipCustomer.insertVipCustomer();		
 		// Cerrar el contexto
 		context.close();
